@@ -5,6 +5,8 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "rentals")
@@ -28,5 +30,13 @@ public class Rental {
 
     @CreationTimestamp
     private Date updated_at;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
+    )
+    @JoinColumn(name = "rental_id")
+    List<Message> messages = new ArrayList<>();
 
 }
