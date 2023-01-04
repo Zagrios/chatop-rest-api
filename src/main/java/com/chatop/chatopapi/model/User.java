@@ -31,7 +31,7 @@ public class User {
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     @JoinColumn(name = "owner_id")
     List<Rental> rentals = new ArrayList<>();
@@ -39,7 +39,7 @@ public class User {
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     @JoinColumn(name = "user_id")
     List<Message> messages = new ArrayList<>();
