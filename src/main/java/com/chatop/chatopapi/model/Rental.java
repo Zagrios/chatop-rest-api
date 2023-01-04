@@ -3,6 +3,7 @@ package com.chatop.chatopapi.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class Rental {
     @CreationTimestamp
     private Date created_at;
 
-    @CreationTimestamp
+    @UpdateTimestamp
     private Date updated_at;
 
     @OneToMany(
