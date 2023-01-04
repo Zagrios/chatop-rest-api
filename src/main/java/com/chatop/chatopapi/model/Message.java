@@ -26,4 +26,12 @@ public class Message {
     @UpdateTimestamp
     private Date updated_at;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "rental_id")
+    private Rental rental;
+
 }

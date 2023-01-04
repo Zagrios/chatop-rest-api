@@ -39,4 +39,10 @@ public class Rental {
     @JoinColumn(name = "rental_id")
     List<Message> messages = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User owner;
+
+
+
 }
