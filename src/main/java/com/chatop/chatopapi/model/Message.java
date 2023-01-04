@@ -16,8 +16,6 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long rental_id;
-    private Long user_id;
     private String message;
 
     @CreationTimestamp

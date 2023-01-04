@@ -24,7 +24,6 @@ public class Rental {
     private float price;
     private String picture;
     private String description;
-    private Long owner_id;
 
     @CreationTimestamp
     private Date created_at;
