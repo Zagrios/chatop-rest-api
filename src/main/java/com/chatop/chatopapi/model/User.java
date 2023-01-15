@@ -1,7 +1,10 @@
 package com.chatop.chatopapi.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,7 +15,9 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Data
-
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -28,19 +33,4 @@ public class User {
     @UpdateTimestamp
     private Date updated_at;
 
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
-    @JoinColumn(name = "owner_id")
-    List<Rental> rentals = new ArrayList<>();
-
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
-    @JoinColumn(name = "user_id")
-    List<Message> messages = new ArrayList<>();
 }
