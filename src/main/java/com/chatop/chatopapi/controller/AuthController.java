@@ -4,6 +4,7 @@ import com.chatop.chatopapi.dto.request.LoginRequest;
 import com.chatop.chatopapi.dto.request.RegisterRequest;
 import com.chatop.chatopapi.dto.response.LoginResponse;
 import com.chatop.chatopapi.dto.response.RegisterResponse;
+import com.chatop.chatopapi.dto.response.UserDetailsResponse;
 import com.chatop.chatopapi.model.User;
 import com.chatop.chatopapi.service.JwtService;
 import com.chatop.chatopapi.service.UserService;
@@ -14,12 +15,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -67,6 +66,19 @@ public class AuthController {
         }
         return ResponseEntity.ok(new LoginResponse(this.jwtService.createJwt(req.getEmail())));
 
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDetailsResponse> me(){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ResponseEntity.ok(UserDetailsResponse.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .created_at(user.getCreated_at())
+                .updated_at(user.getUpdated_at())
+                .build()
+        );
     }
 
 }
