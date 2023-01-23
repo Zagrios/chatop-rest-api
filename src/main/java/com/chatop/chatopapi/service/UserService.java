@@ -30,13 +30,20 @@ public class UserService implements UserDetailsService {
         return this.userRepository.findByEmail(email);
     }
 
-    public User createUser(User user){ return this.userRepository.save(user); }
+    public Optional<User> findById(Long id){
+        return this.userRepository.findById(id);
+    }
+
+    public User createUser(User user){
+        return this.userRepository.save(user);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         final User user = this.userRepository.findByEmail(email).orElseThrow(
                 () -> new UsernameNotFoundException("user not found")
         );
+
         return org.springframework.security.core.userdetails.User
                 .builder()
                 .username(user.getEmail())

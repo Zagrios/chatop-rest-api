@@ -1,7 +1,8 @@
 package com.chatop.chatopapi.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
+
+import javax.validation.constraints.NotBlank;
 
 @Getter
 public class LoginRequest {

@@ -1,5 +1,6 @@
 package com.chatop.chatopapi.security;
 
+import com.chatop.chatopapi.security.filter.EntryPoint;
 import com.chatop.chatopapi.security.filter.JwtFilter;
 import com.chatop.chatopapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,10 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-;
 
 @Configuration
 @EnableWebSecurity
@@ -45,12 +44,15 @@ public class SecurityConfiguration {
         return http
                 .cors(Customizer.withDefaults())
                 .csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(new EntryPoint()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeHttpRequests(authz -> authz
-                        .requestMatchers(
-                                "/auth/login/**",
-                                "/auth/register/**"
-                        ).permitAll()
+                .authorizeHttpRequests(auth -> auth.antMatchers(
+                        "/auth/login/**",
+                        "/auth/register/**",
+                        "/swagger-ui/**",
+                        "/swagger-resources/**",
+                        "/v2/api-docs/**"
+                                ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())

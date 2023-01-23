@@ -8,7 +8,7 @@ import com.chatop.chatopapi.dto.response.UserDetailsResponse;
 import com.chatop.chatopapi.model.User;
 import com.chatop.chatopapi.service.JwtService;
 import com.chatop.chatopapi.service.UserService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,7 +61,6 @@ public class AuthController {
             this.authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword()));
         }
         catch (AuthenticationException e){
-            System.out.println(e);
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         return ResponseEntity.ok(new LoginResponse(this.jwtService.createJwt(req.getEmail())));
